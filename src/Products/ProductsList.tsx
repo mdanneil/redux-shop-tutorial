@@ -32,12 +32,11 @@ const ProductsList: React.FC<ProductsListProps> = ({}) => {
     return (
         <div>
             <h2>Gameslist</h2>
-            {initialProducts.map((product) => (
+            {products.map((product) => (
                 <div key={product.id}>
                     <span>{`${product.title} : ${product.price}`}</span>
                 </div>
             ))}
-
             <button
                 onClick={() =>
                     setProducts((prevProducts) => [
