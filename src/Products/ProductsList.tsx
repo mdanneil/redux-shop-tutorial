@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import products, { getProductsSelector } from "./products.slice";
+import { getProductsSelector } from "./products.slice";
 
 interface ProductsListProps {}
 
