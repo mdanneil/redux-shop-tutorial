@@ -30,12 +30,15 @@ const productSlice = createSlice({
     initialState,
     reducers: {
         addProduct: (state, action: PayloadAction<Product>) => {
-            return [action.payload, ...state];
+            state.push(action.payload);
+        },
+        removeProduct: (state, action: PayloadAction<string>) => {
+            return state.filter((product) => product.id !== action.payload);
         },
     },
 });
 
-export const { addProduct } = productSlice.actions;
+export const { addProduct, removeProduct } = productSlice.actions;
 
 export const getProductsSelector = (state: RootState) => state.products;
 
