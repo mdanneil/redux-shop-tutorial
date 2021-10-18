@@ -1,9 +1,16 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useAppDispatch } from "../store.hooks";
-import { addProduct, Product } from "./products.slice";
+import {
+    addProduct,
+    addProductAsync,
+    getErrorMessage,
+    Product,
+} from "./products.slice";
 
 const ProductForm: React.FC = () => {
     const dispatch = useAppDispatch();
+    const errorMessage = useSelector(getErrorMessage);
 
     const [product, setProduct] = useState<Product>({
         id: "",
@@ -22,7 +29,7 @@ const ProductForm: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        dispatch(addProduct(product));
+        dispatch(addProductAsync(product));
     };
 
     const { title, price, id } = product;
@@ -30,8 +37,14 @@ const ProductForm: React.FC = () => {
     return (
         <>
             <h2>Add game to the store</h2>
+            {errorMessage && <span>error: {errorMessage}</span>}
             <form onSubmit={handleSubmit}>
                 <input
+                    style={{
+                        border: errorMessage
+                            ? "1px solid red"
+                            : "1px solid black",
+                    }}
                     type="text"
                     placeholder="Game title"
                     name="title"
@@ -39,6 +52,11 @@ const ProductForm: React.FC = () => {
                     onChange={handleChange}
                 />
                 <input
+                    style={{
+                        border: errorMessage
+                            ? "1px solid red"
+                            : "1px solid black",
+                    }}
                     type="number"
                     placeholder="Price"
                     name="price"
@@ -46,13 +64,25 @@ const ProductForm: React.FC = () => {
                     onChange={handleChange}
                 />
                 <input
+                    style={{
+                        border: errorMessage
+                            ? "1px solid red"
+                            : "1px solid black",
+                    }}
                     type="text"
                     placeholder="ID"
                     name="id"
                     value={id}
                     onChange={handleChange}
                 />
-                <button type="submit">Add game</button>
+                <button
+                    style={{
+                        backgroundColor: errorMessage ? "red" : "#f2f5f9",
+                    }}
+                    type="submit"
+                >
+                    Add game
+                </button>
             </form>
         </>
     );
